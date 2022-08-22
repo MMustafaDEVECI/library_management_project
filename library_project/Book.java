@@ -25,7 +25,6 @@ public class Book { // primary id
         System.out.println("Enter stock number of book");
         this.stockNum = scanned.nextInt();
         scanned.nextLine();
-        scanned.close();
     }
     public void bookInsert(Connection myCon){
         try{

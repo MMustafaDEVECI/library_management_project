@@ -26,6 +26,5 @@ public class Customer {
         } catch (Exception e) {
             System.out.println(e);
         }
-        scanned.close();
     }
 }

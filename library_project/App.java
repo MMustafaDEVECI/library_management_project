@@ -14,7 +14,8 @@ public class App {
         try{
             Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydatabase","deveci","password");
             Statement statment = myCon.createStatement();
-            PreparedStatement preStat = null;
+            Scanner scanned = new Scanner(System.in);
+            PreparedStatement preStat;
             String title;
             String writer;
             int i;
@@ -22,7 +23,6 @@ public class App {
             String cell;
             boolean tableExists;
             while (input != 0){
-                Scanner scanned = new Scanner(System.in);
                 menu();
                 switch (input){
                     case (1):
@@ -41,7 +41,7 @@ public class App {
                             if (!custExist){
                                 new Customer(myCon, cell);
                             }
-                            rs.close();
+                            //rs.close();
                         }
                         else{
                             statment.executeUpdate("CREATE TABLE customers(name VARCHAR(20), surName VARCHAR(20), cell VARCHAR(11) PRIMARY KEY, bookId INT, date VARCHAR(15))");
@@ -72,7 +72,7 @@ public class App {
                             while(rs.next()){
                                 id = rs.getInt("bookId");
                             }
-                            rs.close();
+                            //rs.close();
                             preStat = myCon.prepareStatement("UPDATE customers SET bookId = ?  WHERE cell = ?");
                             preStat.setInt(1, id);
                             preStat.setString(2, cell);
@@ -107,7 +107,7 @@ public class App {
                         while(rs.next()){
                             id1 = rs.getInt("bookId");
                         }
-                        rs.close();
+                        //rs.close();
                         if (id == id1){
                             preStat = myCon.prepareStatement("UPDATE books SET stockNum = stockNum + 1 WHERE title = ? and writer = ? ");
                             preStat.setString(1, title);
@@ -263,11 +263,11 @@ public class App {
                     case (0):
                         break;
                 }
-                scanned.close();
             }
+            scanned.close();
             statment.close();
             myCon.close();
-            preStat.close();
+            preStat = null;
         }
         catch (Exception e){
             System.out.println(e);
@@ -288,7 +288,6 @@ public class App {
         System.out.println("0 - End Program");
         input = scanned.nextInt();
         scanned.nextLine();
-        scanned.close();
     }
     private static void showBookInfo(Statement statment){
         try{

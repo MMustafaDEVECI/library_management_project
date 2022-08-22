@@ -38,7 +38,6 @@ public class Librarian { //primary -> id
             preStat.setString(3, cellNumber);
             preStat.setInt(4, salary);
             preStat.executeUpdate();
-            scanned.close();
         }
         catch(Exception e){
             System.out.println(e);
