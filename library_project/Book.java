@@ -2,27 +2,37 @@ package library_project;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.util.Scanner;
 
 public class Book { // primary id
     String title;
     String writer;
-    int pageNumber;
+    int pageNum;
     String publisher;
     int stockNum;
-    public Book(String title, String writer, int pageNumber, String publisher, int stockNum)
+    public Book()
     {
-        this.title = title;
-        this.writer = writer;
-        this.pageNumber = pageNumber;
-        this.publisher = publisher;
-        this.stockNum = stockNum;
+        System.out.println("Enter title of book");
+        Scanner scanned = new Scanner(System.in);
+        this.title = scanned.nextLine();
+        System.out.println("Enter full name of writer of book");
+        this.writer = scanned.nextLine();
+        System.out.println("Enter page number of book");
+        this.pageNum = scanned.nextInt();
+        scanned.nextLine();
+        System.out.println("Enter publisher of book");
+        this.publisher = scanned.nextLine();
+        System.out.println("Enter stock number of book");
+        this.stockNum = scanned.nextInt();
+        scanned.nextLine();
+        scanned.close();
     }
     public void bookInsert(Connection myCon){
         try{
-            PreparedStatement preStat = myCon.prepareStatement("INSERT INTO books VALUES(?,?,?,?,?)");
+            PreparedStatement preStat = myCon.prepareStatement("INSERT INTO books(title,writer,pageNum,publisher,stockNum) VALUES(?,?,?,?,?)");
             preStat.setString(1, this.title);
             preStat.setString(2, this.writer);
-            preStat.setInt(3, this.pageNumber);
+            preStat.setInt(3, this.pageNum);
             preStat.setString(4, this.publisher);
             preStat.setInt(5, this.stockNum);
             int i = preStat.executeUpdate();
